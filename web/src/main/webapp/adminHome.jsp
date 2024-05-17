@@ -21,19 +21,19 @@
         </tr>
         <tr>
             <th>Destination Location</th>
-            <td><input type="password" name="destinationLocation"/></td>
+            <td><input type="text" name="destinationLocation"/></td>
         </tr>
         <tr>
             <th>Origin Location</th>
-            <td><input type="password" name="originLocation"/></td>
+            <td><input type="text" name="originLocation"/></td>
         </tr>
         <tr>
             <th>Details</th>
-            <td><input type="password" name="details"/></td>
+            <td><input type="text" name="details"/></td>
         </tr>
         <tr>
             <th>Status</th>
-            <td><input type="password" name="status"/></td>
+            <td><input type="text" name="status"/></td>
         </tr>
         <td></td>
         <td>
@@ -41,5 +41,6 @@
         </td>
     </table>
 </form>
+<a href="viewCargo">View Cargo</a>
 </body>
 </html>

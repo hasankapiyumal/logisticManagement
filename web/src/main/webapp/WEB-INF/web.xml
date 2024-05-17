@@ -8,6 +8,10 @@
             <web-resource-name>Basic</web-resource-name>
             <url-pattern>/adminHome</url-pattern>
             <url-pattern>/adminHome.jsp</url-pattern>
+            <url-pattern>/cargo_details.jsp</url-pattern>
+            <url-pattern>/addCargo</url-pattern>
+            <url-pattern>/updateCargo</url-pattern>
+            <url-pattern>/viewCargo</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
         </web-resource-collection>

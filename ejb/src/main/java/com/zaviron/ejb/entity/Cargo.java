@@ -1,14 +1,14 @@
 package com.zaviron.ejb.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Cargo {
+@Cacheable(value = false)
+@NamedQuery(name = "Cargo.findById",query = "select c from Cargo c where c.id=?1")
+public class Cargo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
