@@ -3,9 +3,8 @@ package com.zaviron.ejb.impl;
 import com.zaviron.ejb.entity.Cargo;
 import com.zaviron.ejb.exception.CargoNotFoundException;
 import com.zaviron.ejb.remote.TrackCargo;
-import jakarta.ejb.Stateless;
-import jakarta.ejb.TransactionManagement;
-import jakarta.ejb.TransactionManagementType;
+import jakarta.annotation.Resource;
+import jakarta.ejb.*;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -20,13 +19,18 @@ public class TrackCargoImpl implements TrackCargo {
     private EntityManager entityManager;
     @Inject
     private UserTransaction userTransaction;
-    private Long id;
+  //  private Long id;
+    @Resource
+    SessionContext sessionContext;
+    Timer timer;
+
 
     @Override
     public String cargoTracking(Long id) {
-        if (this.id == null) {
-            this.id = id;
-        }
+//        if (this.id == null) {
+//            this.id = id;
+//        }
+
         try {
             Cargo cargo = entityManager.createNamedQuery("Cargo.findById", Cargo.class).setParameter(1, id).getSingleResult();
             if (cargo != null) {
@@ -36,7 +40,8 @@ public class TrackCargoImpl implements TrackCargo {
                 String originLocation = cargo.getOriginLocation();
                 try {
                     userTransaction.begin();
-                    entityManager.merge(cargo);
+                    Cargo merge = entityManager.merge(cargo);
+                    System.out.println(merge.getId());
                     userTransaction.commit();
 
                 } catch (Exception e) {
@@ -54,5 +59,26 @@ public class TrackCargoImpl implements TrackCargo {
             throw new CargoNotFoundException("Cargo Not Found");
         }
 
+    }
+
+    @Override
+    public void time(Long id) {
+        ScheduleExpression scheduleExpression = new ScheduleExpression();
+        scheduleExpression.hour("*");
+        scheduleExpression.minute("*");
+        scheduleExpression.second("*");
+        timer=sessionContext.getTimerService().createCalendarTimer(scheduleExpression);
+
+
+
+    }
+
+    @Timeout
+    @Override
+    public void run() {
+        String s = cargoTracking(1L);
+
+        System.out.println("cargo Tracking : "+s);
+        System.out.println("cargo Tracking : ");
     }
 }
