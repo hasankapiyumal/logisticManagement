@@ -21,8 +21,8 @@ public class AddCargoImpl implements AddCargo {
     public Long addCargo(String current_location, String origin_location, String destination, String status, String details) {
         Cargo  cargo = new Cargo(origin_location, destination, current_location, status, details);
         entityManager.persist(cargo);
-        entityManager.flush(); // Force immediate ID generation
-        Long  cargoId = cargo.getId(); // Get the generated ID here
+        entityManager.flush();
+        Long  cargoId = cargo.getId();
         System.out.println("Cargo created with ID: " + cargoId);
         return cargoId;
 

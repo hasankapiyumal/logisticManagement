@@ -27,9 +27,7 @@ public class TrackCargoImpl implements TrackCargo {
 
     @Override
     public String cargoTracking(Long id) {
-//        if (this.id == null) {
-//            this.id = id;
-//        }
+
 
         try {
             Cargo cargo = entityManager.createNamedQuery("Cargo.findById", Cargo.class).setParameter(1, id).getSingleResult();
@@ -51,7 +49,7 @@ public class TrackCargoImpl implements TrackCargo {
                         throw new RuntimeException(ex);
                     }
                 }
-                return "currentLocation : " + currentLocation;
+                return "cargoTrackingId : " +cargo.getId()+ "currentLocation : " + currentLocation+" "+"destinationLocation : "+destinationLocation+" "+" originLocation : "+originLocation+" "+"cargo details"+cargo.getDetails()+" "+"cargo status : "+cargo.getStatus();
             } else {
                 throw new CargoNotFoundException("Cargo Not Found");
             }
@@ -61,24 +59,5 @@ public class TrackCargoImpl implements TrackCargo {
 
     }
 
-    @Override
-    public void time(Long id) {
-        ScheduleExpression scheduleExpression = new ScheduleExpression();
-        scheduleExpression.hour("*");
-        scheduleExpression.minute("*");
-        scheduleExpression.second("*");
-        timer=sessionContext.getTimerService().createCalendarTimer(scheduleExpression);
 
-
-
-    }
-
-    @Timeout
-    @Override
-    public void run() {
-        String s = cargoTracking(1L);
-
-        System.out.println("cargo Tracking : "+s);
-        System.out.println("cargo Tracking : ");
-    }
 }

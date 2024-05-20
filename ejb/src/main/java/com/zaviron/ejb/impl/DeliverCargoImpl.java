@@ -12,6 +12,9 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.SystemException;
 import jakarta.transaction.UserTransaction;
 
+import java.util.List;
+import java.util.Random;
+
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
 public class DeliverCargoImpl implements DeliverCargo {
@@ -45,9 +48,50 @@ public class DeliverCargoImpl implements DeliverCargo {
                 String status = cargo.getStatus();
                 String destinationLocation = cargo.getDestinationLocation();
                 String originLocation = cargo.getOriginLocation();
+                String[] cities = {
+                        "Colombo",
+                        "Galle",
+                        "Kandy",
+                        "Anuradhapura",
+                        "Matara",
+                        "Negombo",
+                        "Kalutara",
+                        "Ratnapura",
+                        "Kurunegala",
+                        "Badulla",
+                        "Avissawella",
+                        "Embilipitiya",
+                        "Kataragama",
+                        "Beliatta",
+                        "Chilaw",
+                        "Nuwara Eliya",
+                        "Ampara",
+                        "Hambantota",
+                        "Tangalle",
+                        "Weligama",
+                        "Mirissa",
+                        "Hikkaduwa",
+                        "Unawatuna",
+                        "Bentota",
+                        "Sigiriya",
+                        "Dambulla",
+                        "Polonnaruwa",
+                        "Ella",
+                        "Haputale",
+                        "Bandarawela",
+                        "Monaragala",
+                        "Kegalle",
+                        "Matale",
+                        "Gampaha",
+
+                };
+                Random random =new Random();
+                int randomIndex = random.nextInt(cities.length);
+                String randomCity = cities[randomIndex];
+                cargo.setCurrentLocation(randomCity);
 
 
-                if (currentLocation.equals(destinationLocation)) {
+                if (cargo.getCurrentLocation().equals(destinationLocation)) {
                     timer.cancel();
                     cargo.setStatus("Delivered");
                     System.out.println("stop");
@@ -67,6 +111,7 @@ public class DeliverCargoImpl implements DeliverCargo {
 
                 }
                 try {
+
                     userTransaction.begin();
                     Cargo merge = entityManager.merge(cargo);
                     System.out.println(merge.getId());

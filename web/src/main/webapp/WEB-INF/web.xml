@@ -12,6 +12,7 @@
             <url-pattern>/addCargo</url-pattern>
             <url-pattern>/updateCargo</url-pattern>
             <url-pattern>/viewCargo</url-pattern>
+
             <http-method>GET</http-method>
             <http-method>POST</http-method>
         </web-resource-collection>
@@ -19,7 +20,6 @@
             <role-name>superadmin</role-name>
         </auth-constraint>
     </security-constraint>
-
     <login-config>
         <auth-method>FORM</auth-method>
         <form-login-config>
